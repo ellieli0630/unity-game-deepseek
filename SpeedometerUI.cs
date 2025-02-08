@@ -3,23 +3,23 @@ using UnityEngine.UI;
 
 public class SpeedometerUI : MonoBehaviour
 {
-    public CarController carController;   // 关联的车辆控制器
-    public Image needleImage;              // 指针的 Image 组件
-    public float minSpeed = 0f;            // 最小速度
-    public float maxSpeed = 30f;           // 最大速度
+    public CarController carController;   // Linked vehicle controller
+    public Image needleImage;              // Needle Image component
+    public float minSpeed = 0f;            // Minimum speed
+    public float maxSpeed = 30f;           // Maximum speed
 
-    private float currentSpeed = 0f;       // 当前车速
+    private float currentSpeed = 0f;       // Current vehicle speed
 
     void Update()
     {
-        // 获取当前车速（根据车辆的 Rigidbody 速度）
+        // Retrieve current speed (based on vehicle Rigidbody velocity)
         currentSpeed = carController.GetComponent<Rigidbody>().velocity.magnitude;
 
-        // 计算指针应该旋转的角度
-        float speedRatio = Mathf.InverseLerp(minSpeed, maxSpeed, currentSpeed);  // 归一化速度为 0 到 1 的值
-        float rotationAngle = Mathf.Lerp(-90f, 90f, speedRatio);  // -90 到 90 之间的角度
+        // Calculate the needle rotation angle
+        float speedRatio = Mathf.InverseLerp(minSpeed, maxSpeed, currentSpeed);  // Normalize speed to 0-1
+        float rotationAngle = Mathf.Lerp(-90f, 90f, speedRatio);  // Map to -90° to 90°
 
-        // 更新指针的旋转角度
+        // Update needle rotation
         needleImage.transform.rotation = Quaternion.Euler(0, 0, rotationAngle);
     }
 }
